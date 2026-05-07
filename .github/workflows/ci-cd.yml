@@ -1,0 +1,38 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install Frontend Dependencies & Build
+      run: |
+        cd frontend
+        npm install
+        npm run build
+
+    - name: Install Backend Dependencies
+      run: |
+        cd backend
+        npm install
+
+    - name: Build Docker Images
+      run: |
+        docker-compose build
+
+    # Example of a deployment step (Cloud deployment)
+    # - name: Deploy to Cloud
+    #   run: echo "Deploy script goes here (e.g., AWS EBS or Azure App Service)"
