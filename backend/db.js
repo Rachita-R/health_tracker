@@ -1,5 +1,5 @@
-const sqlite3 = require('sqlite3').verbose();
-const { open } = require('sqlite');
+import sqlite3 from 'sqlite3';
+import { open } from 'sqlite';
 
 async function initDB() {
   const db = await open({
@@ -28,4 +28,4 @@ async function initDB() {
   return db;
 }
 
-module.exports = { initDB };
+export { initDB };

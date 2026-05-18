@@ -1,3 +1,16 @@
+import dotenv from 'dotenv';
+import express from 'express';
+import cors from 'cors';
+import http from 'http';
+import { Server } from 'socket.io';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { initDB } from './db.js';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+dotenv.config();
+// ... rest of code
+
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
