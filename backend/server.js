@@ -9,17 +9,6 @@ import { initDB } from './db.js';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 dotenv.config();
-// ... rest of code
-
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const http = require('http');
-const { Server } = require('socket.io');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { initDB } = require('./db');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const app = express();
 const server = http.createServer(app);
