@@ -24,6 +24,10 @@ const io = new Server(server, {
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Health Tracker Backend API is running");
+});
+
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_key';
 
 let db;
@@ -137,7 +141,10 @@ io.on('connection', (socket) => {
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 // Wildcard client router for React Router (must be placed after all API endpoints)
-app.get('*', (req, res) => {
+app.get(/.*/, (req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ error: 'Not Found' });
+  }
   res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
