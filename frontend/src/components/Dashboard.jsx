@@ -37,7 +37,7 @@ export default function Dashboard({ token, onLogout }) {
   useEffect(() => {
     fetchLogs();
     
-    const socket = io('http://localhost:5001');
+    const socket = io();
     socket.on('connect', () => setSocketStatus('Connected (Real-time tracking active)'));
     socket.on('disconnect', () => setSocketStatus('Disconnected'));
     socket.on('steps_updated', (data) => {
@@ -50,7 +50,7 @@ export default function Dashboard({ token, onLogout }) {
 
   const fetchLogs = async () => {
     try {
-      const res = await axios.get('http://localhost:5001/api/health', {
+      const res = await axios.get('/api/health', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setLogs(res.data);
@@ -62,7 +62,7 @@ export default function Dashboard({ token, onLogout }) {
   const handleLogSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5001/api/health', 
+      await axios.post('/api/health', 
         { steps: Number(steps), calories: Number(calories), water: Number(water) },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -81,7 +81,7 @@ export default function Dashboard({ token, onLogout }) {
       const todaysLogs = logs.filter(l => l.date.startsWith(today));
       const totalSteps = todaysLogs.reduce((acc, curr) => acc + curr.steps, 0);
 
-      const res = await axios.post('http://localhost:5001/api/ai/predict-calories',
+      const res = await axios.post('/api/ai/predict-calories',
         { steps: totalSteps, activeMinutes: totalSteps / 100, age: 30, weight: 70 },
         { headers: { Authorization: `Bearer ${token}` } }
       );
