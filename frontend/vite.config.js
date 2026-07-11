@@ -35,6 +35,7 @@ export default defineConfig({
       }
     })
   ],
+  base: '/health_tracker/',
   server: {
     proxy: {
       '/api': {
